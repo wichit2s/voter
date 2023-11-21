@@ -5,7 +5,11 @@ from vote.models import *
 # Create your views here.
 def home(req):
     return render(req, 'vote/home.html', {
+<<<<<<< HEAD
         'questions': Question.objects.all()
+=======
+        'question': Question.objects.all()
+>>>>>>> 069a687a8466ced61d59dca31d2c3200254ad792
     })
 
 def login(req):
