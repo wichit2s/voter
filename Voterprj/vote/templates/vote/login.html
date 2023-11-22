@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
-    <title>Voter Login</title>
-</head>
-<body>
-   <h1>Voter Login</h1> 
-=======
     <title>Login</title>
 </head>
 <body>
+    {% if message %}
+    <h3>{{ message }}</h3>
+    {% endif %}
     <h1>Login</h1>
->>>>>>> 069a687a8466ced61d59dca31d2c3200254ad792
+    <div>
+      <form action="{% url 'vote_login' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="next_url" value={{ next_url }} />
+        <label for="username_input">Username: </label><input id="username_input" type="text" name="username" placeholder="username"/> <br/>
+        <label for="password_input">Password: </label><input id="password_input" type="password" name="password" placeholder="password"/> <br/>
+        <button type="submit">Login</button>
+      </form>
+    </div>
 </body>
 </html>

@@ -6,48 +6,49 @@
     <title>Vote</title>
 </head>
 <body>
-<<<<<<< HEAD
    <ul>
     <li><a href="{% url 'vote_home' %}">HOME</a></li>
     <li><a href="{% url 'vote_make_question' %}">Question</a></li>
     <li><a href="{% url 'vote_answer_question' %}">Answer</a></li>
+    {% if user.is_authenticated %}
+    <li>{{ user.username }}</li>
+    <li><a href="{% url 'vote_logout' %}">Logout</a></li>
+    {% else %}
     <li><a href="{% url 'vote_login' %}">Login</a></li>
+    {% endif %}
    </ul>
    <h1>Voter System</h1> 
    <div>
     <ol>
         {% for q in questions %}
-        <li>{{ q.text }} - {{ q.user.username }}
+        <li>{{ q.text }} - ถามโดย {{ q.user.username }}
             <ul>
                 {% for a in q.answer_set.all %}
-                <li>{{ a.text }}</li>
+                <li>{{ a.text }} +{{ a.count }}</li>
                 {% endfor %}
+                {% if user.is_authenticated %}
+                <li>
+                  <form action="{% url 'vote_create_answer' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="question_id" value={{ q.id }} />
+                    <input type="text" name="text" placeholder="เพิ่มคำตอบ" />
+                    <button type="submit">เพิ่มคำตอบ</button>
+                  </form>
+                </li>
+                {% endif %}
             </ul>
         </li>
         {% endfor %}
+        {% if user.is_authenticated %}
+        <li>
+          <form action="{% url 'vote_create_question' %}" method="POST">
+            {% csrf_token %}
+            <input type="text" name="text" placeholder="เพิ่มคำถาม" />
+            <button type="submit">เพิ่มคำถาม</button>
+          </form>
+        </li>
+        {% endif %}
     </ol>
    </div>
-=======
-    <ul>
-        <li><a href="{% url 'vote_home' %}">HOME</a></li>
-        <li><a href="{% url 'vote_make_question' %}">QUESTION</a></li>
-        <li><a href="{% url 'vote_answer_question' %}">ANSWER</a></li>
-        <li><a href="{% url 'vote_login' %}">LOGIN</a></li>
-    </ul>
-    <h1>Voter System</h1>
-    <div>
-        <ol>
-            {% for q in questions %}
-            <li>{{ q.text }} - {{ q.user.username }}
-                <ul>
-                    {% for a in q.answer_set.all %}
-                    <li>{{ a.text }}</li>
-                    {% endfor %}
-                </ul>
-            </li>
-            {% endfor %}
-        </ol>
-    </div>
->>>>>>> 069a687a8466ced61d59dca31d2c3200254ad792
 </body>
 </html>
