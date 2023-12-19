@@ -1,5 +1,5 @@
 from django import forms
-from voter.models import Question
+from vote.models import Question,Answer
 
 class QuestionForm(forms.ModelForm):
     class Meta:
