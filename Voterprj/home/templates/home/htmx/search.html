@@ -1,0 +1,18 @@
+    <!--
+  <div 
+    id="search-results"
+    class="grow px-6 h-96 w-full flex flex-wrap justify-between content-between">
+
+    <div class="text-gray-500 my-auto mx-auto animate-pulse">กรอกคำถามเพื่อเริ่มค้นหา</div>
+    -->
+
+    {% for question in questions %}
+
+    {% include 'home/htmx/question.html' with q=question %}
+      
+    {% endfor %}
+
+
+    <!--
+  </div>
+  -->

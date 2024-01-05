@@ -37,8 +37,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "vote",
-    "home",
+    'django_htmx',
+    'django_htmx_refresh',
+    'vote',
+    'home',
+]
+HTMX_APPS = [
+    'home',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +54,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'django_htmx.middleware.HtmxMiddleware',
+    'django_htmx_refresh.middleware.HtmxResponseMiddleware',
 ]
 
 ROOT_URLCONF = "Voterprj.urls"

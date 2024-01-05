@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voter Search</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10" defer></script>
+
+    {% load static %}
+  </head>
+  <body
+      hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+      class="
+             flex flex-col
+             min-h-screen
+             leading-6
+             text-sm
+             font-san
+             ">
+    <div class="min-h-screen flex items-center justify-center">
+      <div class="relative h-[600px] w-[400px] shadow-xl overflow-hidden rounded-3xl bg-cover bg-[url({% static 'home/images/voter.jpg' %})]">
+        <div class="w-full bg-[100%]"></div>
+        <div class="absolute bottom-0 flex h-3/4 w-full flex-col rounded-t-3xl bg-white bg-opacity-60 shadow">
+          <form action="/login/" method="POST" class="mt-10 space-y-8 px-10 py-10 text-center">
+            {% csrf_token %}
+            <div class="group relative">
+              <input type="text" id="username" name="username" required class="peer h-14 w-full rounded-3xl bg-gray-100 px-4 text-sm outline-none" />
+              <label for="username" class="absolute left-2 top-0 flex h-full transform items-center pl-2 text-base transition-all duration-300 group-focus-within:-top-7 group-focus-within:h-1/2 group-focus-within:pl-0 group-focus-within:text-base group-focus-within:text-blue-500 peer-valid:-top-7 peer-valid:h-1/2 peer-valid:pl-0 peer-valid:text-base peer-valid:text-white text-orange-500">Username</label>
+            </div>
+
+            <div class="group relative">
+              <input type="password" id="password" name="password" required class="peer h-14 w-full rounded-3xl bg-gray-100 px-4 text-sm outline-none" />
+              <label for="password" class="absolute left-2 top-0 flex h-full transform items-center pl-2 text-base transition-all duration-300 group-focus-within:-top-7 group-focus-within:h-1/2 group-focus-within:pl-0 group-focus-within:text-base group-focus-within:text-blue-500 peer-valid:-top-7 peer-valid:h-1/2 peer-valid:pl-0 peer-valid:text-base peer-valid:text-white text-orange-500">Password</label>
+            </div>
+
+            <button 
+              type="submit"
+              class="h-12 w-full font-serif text-2xl rounded-3xl shadow-xl bg-orange-500 text-white transition-all duration-100 hover:scale-105 hover:bg-blue-500">Login</button>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

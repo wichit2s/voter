@@ -1,0 +1,30 @@
+{% load static %}
+<div class="flex flex-col max-w-sm rounded overflow-hidden shadow-lg mb-6">
+  <div class="w-full h-20 bg-[url({% static 'home/images/voter.jpg' %})] bg-cover">
+  </div>
+  <div class="grow px-6 py-4 min-w-96 ">
+    <div class="font-bold text-xl mb-2 text-center">{{ q.text }}?</div>
+    <ul class="grow">
+      {% for a in q.answer_set.all|dictsortreversed:'count' %}
+      <li class="flex text-gray-700 text-base justify-between">
+        <span>
+          <span
+              class="inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900">
+            {{ a.count }}
+          </span>
+          {{ a.text }}
+        </span>
+        <svg class="w-6 h-6 inline hover:scale-105 hover:text-orange-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-vote"><path d="m9 12 2 2 4-4"/><path d="M5 7c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v12H5V7Z"/><path d="M22 19H2"/></svg>
+      </li>
+      {% empty %}
+      <li class="text-gray-200"> ยังไม่มีผลโหวต </li>
+      {% endfor %}
+      <li class="text-gray-200"> 
+        <input type="text" />
+      </li>
+    </ul>
+  </div>
+  <div class="px-6 pt-4 pb-2">
+    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{{ q.user.username }}</span>
+  </div>
+</div>
