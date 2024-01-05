@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Voter Search</title>
@@ -11,25 +11,26 @@
     <script src="https://unpkg.com/htmx.org@1.9.10" defer></script>
 
     {% load static %}
-</head>
-<body
-  hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
-  class="
-         flex flex-col
-         min-h-screen
-         leading-6
-         text-sm
-         font-san
-  ">
-  {% include 'home/components/nav.html' with current_page='search' %}
+  </head>
+  <body
+      hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+      class="
+             flex flex-col
+             min-h-screen
+             leading-6
+             text-sm
+             font-san
+             ">
 
-  <div 
-    id="search-results"
-    class="grow px-6 h-96 w-full flex flex-wrap justify-between content-between mb-10 overflow-y-scroll">
+    {% include 'home/components/nav.html' with current_page='search' %}
 
-    <div class="text-gray-500 my-auto mx-auto animate-pulse">กรอกคำถามเพื่อเริ่มค้นหา</div>
+    <div 
+      id="search-results"
+      class="grow px-6 h-96 w-full flex flex-wrap justify-between content-between mb-10 overflow-y-scroll">
 
-  </div>
-  {% include 'home/components/footer.html' %}
-</body>
+      <div class="text-gray-500 my-auto mx-auto animate-pulse">กรอกคำถามเพื่อเริ่มค้นหา</div>
+
+    </div>
+    {% include 'home/components/footer.html' %}
+  </body>
 </html>

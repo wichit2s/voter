@@ -1,0 +1,14 @@
+<li id="no_{{n.id}}" class="w-full py-2">
+  <div class="w-full flex flex-col">
+    <span>{{ n.text|default:'' }}</span>
+    <div class="w-full flex justify-between px-2 text-xs">
+      <span class="text-blue-500">{{ n.created_at|date:'d-m-Y H:i' }}</span>
+      <button 
+            hx-post="/htmx/notification/delete/{{n.id}}/"
+            hx-swap="outerHTML"
+            hx-target="#no_{{n.id}}"
+            class="text-red-500 px-1 rounded-full border border-orange-600 hover:scale-105"
+            >x</button>
+    </div>
+  </div>
+</li>

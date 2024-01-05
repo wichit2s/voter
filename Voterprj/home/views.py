@@ -1,11 +1,19 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from vote import models
+from home.models import Notification
 from django.db.models import Q
 from django.contrib import auth
 
 # Create your views here.
 def home(req):
-    return render(req, 'home/home.html')
+    #return render(req, 'home/home.html')
+    context = {
+        'notifications': []
+    }
+    if req.user.is_authenticated:
+        context['notifications'] = Notification.objects.filter(user=req.user)
+    return render(req, 'home/notification.html', context)
 
 def questions(req):
     context = {
@@ -30,6 +38,19 @@ def htmx_search(req):
                 )
 
     return render(req, 'home/htmx/search.html', context)
+
+def htmx_notification_delete(req, id):
+    #print(f'htmx_notification_delete({id})')
+    n = Notification.objects.filter(pk=id).first()
+    if n:
+        n.delete()
+    return HttpResponse('')
+
+def htmx_notification_count(req):
+    #print(f'htmx_notification_count({req.user})')
+    if req.user.is_authenticated:
+        return HttpResponse(f'{req.user.notification_set.count()}')
+    return HttpResponse('0')
 
 def login(req):
     message = ''

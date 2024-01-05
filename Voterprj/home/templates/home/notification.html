@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voter Search</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10" defer></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+
+    {% load static %}
+
+  <style>
+    [x-cloak] { 
+      display: none !important;
+    }
+  </style>
+</head>
+<body
+  hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+    x-data="{'modalOpen': false}"
+    x-on:keydown.escape="isModalOpen=false"
+  class="
+         flex flex-col
+         min-h-screen
+         leading-6
+         text-sm
+         font-san
+  ">
+  {% include 'home/components/nav.html' %}
+
+  <div 
+  id="search-results"
+  class="grow px-6 h-96 w-full flex flex-wrap justify-between content-between mb-10 overflow-y-scroll">
+
+    <div
+        class="w-[300px] h-[400px] fixed top-32 end-12 bg-orange-100 px-6 py-10 shadow-md rounded-md"
+        role="dialog"
+        tabindex="-1"
+        x-show="modalOpen"
+        x-on:click.away="modalOpen = false"
+        x-cloak
+        x-transition
+        >
+        <div class="h-full flex flex-col">
+          <div class="inline-flex items-center justify-center w-full">
+            <button  x-on:click="modalOpen=false"
+              class="absolute animate-pulse hover:scale-105 mx-auto mt-0">
+              <svg class="w-8 h-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-ring"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/><path d="M4 2C2.8 3.7 2 5.7 2 8"/><path d="M22 8c0-2.3-.8-4.3-2-6"/></svg>
+            </button>
+          </div>
+          <div class="mt-6 overflow-y-scroll">
+            <ul class="h-full">
+              {% for n in notifications %}
+                {% include 'home/htmx/notification.html' %}
+              {% empty %}
+              <li class="mx-auto text-gray-500">ไม่มีแจ้งเตือน</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+    </div>
+
+  </div>
+  {% include 'home/components/footer.html' %}
+</body>
+</html>
