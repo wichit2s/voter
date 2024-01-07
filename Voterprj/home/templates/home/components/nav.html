@@ -30,6 +30,13 @@
           Vote
         </a>
       </li>
+      {% if user.is_superuser %}
+      <li class="font-semibold text-gray-700">
+        <a href="/dashboard/" class="text-gray-600 hover:text-orange-500 px-2 py-2 hover:border hover:rounded-xl hover:border-orange-600">
+          Dashboard
+        </a>
+      </li>
+      {% endif %}
       <li class="font-semibold text-gray-700">
         <a href="/questions/" class="text-gray-600 hover:text-orange-500 px-2 py-2 hover:border hover:rounded-xl hover:border-orange-600">
           Questions
@@ -49,13 +56,13 @@
       <li>
         {% if not user.is_authenticated %}
         <a href="/login" class="hover:underline text-gray-600 px-2 py-2 hover:text-orange-500 hover:border hover:rounded-xl hover:border-orange-600">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-in"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-in"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg>
         </a>
         {% else %}
         <button 
-             x-on:click="modalOpen=true"
-          class="inline pl-1 hover:text-orange-500">
-        <svg class="inline" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+               x-on:click="modalOpen=true"
+               class="inline pl-1 hover:text-orange-500">
+          <svg class="inline" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
           <span
               hx-post="/htmx/notification/count/"
               hx-trigger="every 1s"

@@ -4,23 +4,46 @@ from vote import models
 from home.models import Notification
 from django.db.models import Q
 from django.contrib import auth
+import pygwalker as pyg
+import pandas as pd
+from django.contrib.auth.decorators import user_passes_test, login_required
 
 # Create your views here.
 def home(req):
     #return render(req, 'home/home.html')
     context = {
-        'notifications': []
+        'notifications': [],
     }
     if req.user.is_authenticated:
         context['notifications'] = Notification.objects.filter(user=req.user)
     return render(req, 'home/notification.html', context)
 
+@user_passes_test(lambda user: user.is_superuser, login_url='login')
+def dashboard(req):
+    d = {
+        'usernames': [],
+        'questions': [],
+        'answers': [],
+     }
+    for q in models.Question.objects.all():
+        d['usernames'].append(q.user.username)
+        d['questions'].append(q.text)
+        d['answers'].append(q.answer_set.count())
+
+    df = pd.DataFrame(d)
+    context = {
+        #'questions': models.Question.objects.all(),
+        'dashboard': pyg.to_html(df),
+    }
+    return render(req, 'home/dashboard.html', context)
+
 def questions(req):
     context = {
-            'questions': models.Question.objects.all()
+        'questions': models.Question.objects.all()
     }
     return render(req, 'home/questions.html', context)
 
+@login_required(login_url='login')
 def search(req):
     print('search()')
     return render(req, 'home/search.html')

@@ -5,12 +5,12 @@ from openpyxl import load_workbook
 
 class Command(BaseCommand):
     def load_users(self, sheetname='User'):
-        ### 'username', 'email', 'password'
-        # ['a', 'a@ubu.ac.th', 'aaa'],
-        # ['b', 'b@ubu.ac.th', 'bbb'],
-        # ['c', 'c@ubu.ac.th', 'ccc'],
-        # ['d', 'd@ubu.ac.th', 'ddd'],
-        # ['e', 'e@ubu.ac.th', 'eee'],
+        ### 'username', 'email', 'password', 'is_staff', 'is_superuser'
+        # ['a', 'a@ubu.ac.th', 'aaa', 1, 1 ],
+        # ['b', 'b@ubu.ac.th', 'bbb', 1, 0 ],
+        # ['c', 'c@ubu.ac.th', 'ccc', 0, 0 ],
+        # ['d', 'd@ubu.ac.th', 'ddd', 0, 0 ],
+        # ['e', 'e@ubu.ac.th', 'eee', 0, 0 ],
         sh = self.wb[sheetname]
         obj_list = []
         for row in sh:
@@ -18,6 +18,10 @@ class Command(BaseCommand):
             print(values)
             obj, created = User.objects.get_or_create(username=values[0], email=values[1])
             obj.set_password(values[2])
+            if bool(values[3]): # 1, 0
+                obj.is_staff = True
+            if bool(values[4]): # 1, 0
+                obj.is_superuser = True
             obj.save()
             obj_list.append(obj)
         return obj_list
