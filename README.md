@@ -1,3 +1,2 @@
 # voter
 dssi voter
-afafadadawda
